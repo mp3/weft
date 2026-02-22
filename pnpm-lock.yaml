@@ -9,19 +9,19 @@ importers:
   .:
     dependencies:
       '@codemirror/commands':
-        specifier: ^6.10.2
+        specifier: 6.10.2
         version: 6.10.2
       '@codemirror/state':
-        specifier: ^6.5.4
+        specifier: 6.5.4
         version: 6.5.4
       '@codemirror/view':
-        specifier: ^6.39.15
+        specifier: 6.39.15
         version: 6.39.15
       '@replit/codemirror-vim':
-        specifier: ^6.3.0
+        specifier: 6.3.0
         version: 6.3.0(@codemirror/commands@6.10.2)(@codemirror/language@6.12.1)(@codemirror/search@6.6.0)(@codemirror/state@6.5.4)(@codemirror/view@6.39.15)
       codemirror:
-        specifier: ^6.0.2
+        specifier: 6.0.2
         version: 6.0.2
       next:
         specifier: 16.1.6
@@ -33,59 +33,59 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
       zod:
-        specifier: ^4.3.6
+        specifier: 4.3.6
         version: 4.3.6
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.4.4
+        specifier: 2.4.4
         version: 2.4.4
       '@opennextjs/cloudflare':
-        specifier: ^1.16.5
+        specifier: 1.16.5
         version: 1.16.5(next@16.1.6(@babel/core@7.29.0)(@playwright/test@1.58.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(wrangler@4.67.0)
       '@playwright/test':
-        specifier: ^1.58.2
+        specifier: 1.58.2
         version: 1.58.2
       '@tailwindcss/postcss':
-        specifier: ^4
+        specifier: 4.2.0
         version: 4.2.0
       '@types/node':
-        specifier: ^20
+        specifier: 20.19.33
         version: 20.19.33
       '@types/react':
-        specifier: ^19
+        specifier: 19.2.14
         version: 19.2.14
       '@types/react-dom':
-        specifier: ^19
+        specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.14)
       '@vitejs/plugin-react':
-        specifier: ^5.1.4
+        specifier: 5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@20.19.33)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.16.9)(yaml@2.8.2))
       '@vitest/coverage-v8':
-        specifier: ^4.0.18
+        specifier: 4.0.18
         version: 4.0.18(vitest@4.0.18(@types/node@20.19.33)(jiti@2.6.1)(jsdom@25.0.1)(lightningcss@1.31.1)(terser@5.16.9)(yaml@2.8.2))
       eslint:
-        specifier: ^9
+        specifier: 9.39.3
         version: 9.39.3(jiti@2.6.1)
       eslint-config-next:
         specifier: 16.1.6
         version: 16.1.6(@typescript-eslint/parser@8.56.0(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3)
       jsdom:
-        specifier: ^25.0.1
+        specifier: 25.0.1
         version: 25.0.1
       tailwindcss:
-        specifier: ^4
+        specifier: 4.2.0
         version: 4.2.0
       typescript:
-        specifier: ^5
+        specifier: 5.9.3
         version: 5.9.3
       vite-tsconfig-paths:
-        specifier: ^6.1.1
+        specifier: 6.1.1
         version: 6.1.1(typescript@5.9.3)(vite@7.3.1(@types/node@20.19.33)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.16.9)(yaml@2.8.2))
       vitest:
-        specifier: ^4.0.18
+        specifier: 4.0.18
         version: 4.0.18(@types/node@20.19.33)(jiti@2.6.1)(jsdom@25.0.1)(lightningcss@1.31.1)(terser@5.16.9)(yaml@2.8.2)
       wrangler:
-        specifier: ^4.67.0
+        specifier: 4.67.0
         version: 4.67.0
 
 packages:
