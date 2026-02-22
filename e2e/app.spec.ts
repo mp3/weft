@@ -78,4 +78,32 @@ test.describe('Weft Editor', () => {
     await expect(exportBtn).toBeVisible()
     await expect(exportBtn).toHaveText('Export .txt')
   })
+
+  test('help dialog opens with syntax reference and closes via X button', async ({ page }) => {
+    const helpBtn = page.locator('[data-testid="help-button"]')
+    await expect(helpBtn).toBeVisible()
+    await helpBtn.click()
+
+    const dialog = page.locator('[data-testid="help-dialog"]')
+    await expect(dialog).toBeVisible()
+    await expect(dialog).toContainText('Syntax Reference')
+    await expect(dialog).toContainText('- [ ] description')
+    await expect(dialog).toContainText('#tagname')
+    await expect(dialog).toContainText('due:YYYY-MM-DD')
+
+    const closeBtn = page.locator('[data-testid="help-close"]')
+    await closeBtn.click()
+    await expect(dialog).not.toBeVisible()
+  })
+
+  test('help dialog closes on Escape key', async ({ page }) => {
+    const helpBtn = page.locator('[data-testid="help-button"]')
+    await helpBtn.click()
+
+    const dialog = page.locator('[data-testid="help-dialog"]')
+    await expect(dialog).toBeVisible()
+
+    await page.keyboard.press('Escape')
+    await expect(dialog).not.toBeVisible()
+  })
 })
