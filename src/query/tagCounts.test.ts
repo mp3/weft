@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { tagCounts } from './tagCounts'
 import type { ParsedTask } from '@/parser/types'
+import { tagCounts } from './tagCounts'
 
 const makeTask = (tags: string[]): ParsedTask => ({
   line: 0,
@@ -27,11 +27,7 @@ describe('tagCounts', () => {
   })
 
   it('sorts by count descending', () => {
-    const tasks = [
-      makeTask(['a']),
-      makeTask(['b', 'a']),
-      makeTask(['c', 'b', 'a']),
-    ]
+    const tasks = [makeTask(['a']), makeTask(['b', 'a']), makeTask(['c', 'b', 'a'])]
     const result = tagCounts(tasks)
     expect(result[0]).toEqual({ tag: 'a', count: 3 })
     expect(result[1]).toEqual({ tag: 'b', count: 2 })

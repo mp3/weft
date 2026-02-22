@@ -1,14 +1,14 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { EditorView, basicSetup } from 'codemirror'
 import { EditorState } from '@codemirror/state'
 import { vim } from '@replit/codemirror-vim'
+import { basicSetup, EditorView } from 'codemirror'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { parseDocument } from '@/parser/parseDocument'
 import { toggleTaskLine } from '@/parser/toggleTask'
-import { loadDocument, saveDocument } from '@/storage/localStorage'
-import { SAMPLE_TEXT } from '@/sampleText'
 import type { ParsedDocument } from '@/parser/types'
+import { SAMPLE_TEXT } from '@/sampleText'
+import { loadDocument, saveDocument } from '@/storage/localStorage'
 
 const SAVE_DEBOUNCE_MS = 500
 

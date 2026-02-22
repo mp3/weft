@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { dueSoon } from './dueSoon'
 import type { ParsedTask } from '@/parser/types'
+import { dueSoon } from './dueSoon'
 
 const REF_DATE = '2026-02-21'
 

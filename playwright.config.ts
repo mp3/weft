@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'mise exec -- pnpm dev',
+    command: process.env.CI ? 'pnpm dev' : 'mise exec -- pnpm dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },

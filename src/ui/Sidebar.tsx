@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 import type { ParsedDocument } from '@/parser/types'
-import { openTasks } from '@/query/openTasks'
 import { dueSoon } from '@/query/dueSoon'
+import { openTasks } from '@/query/openTasks'
 import { tagCounts } from '@/query/tagCounts'
-import { TaskList } from './TaskList'
 import { DueSoonPanel } from './DueSoonPanel'
 import { TagCloud } from './TagCloud'
+import { TaskList } from './TaskList'
 
 type Tab = 'tasks' | 'due' | 'tags'
 

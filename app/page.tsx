@@ -1,9 +1,9 @@
 'use client'
 
-import { useWeftEditor } from '@/ui/useWeftEditor'
+import { exportAsTextFile } from '@/storage/exportFile'
 import { Editor } from '@/ui/Editor'
 import { Sidebar } from '@/ui/Sidebar'
-import { exportAsTextFile } from '@/storage/exportFile'
+import { useWeftEditor } from '@/ui/useWeftEditor'
 
 export default function Home() {
   const { editorRef, parsed, toggleTask, getDocText } = useWeftEditor()

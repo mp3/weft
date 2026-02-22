@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { toggleTaskLine, toggleTaskInDocument } from './toggleTask'
+import { toggleTaskInDocument, toggleTaskLine } from './toggleTask'
 
 describe('toggleTaskLine', () => {
   it('toggles open to completed', () => {

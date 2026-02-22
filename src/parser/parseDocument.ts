@@ -1,5 +1,5 @@
-import type { ParsedDocument } from './types'
 import { parseLine } from './parseLine'
+import type { ParsedDocument } from './types'
 
 export function parseDocument(doc: string): ParsedDocument {
   const lines = doc.split('\n')

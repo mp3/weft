@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { openTasks } from './openTasks'
 import type { ParsedTask } from '@/parser/types'
+import { openTasks } from './openTasks'
 
 const makeTasks = (overrides: Partial<ParsedTask>[]): ParsedTask[] =>
   overrides.map((o, i) => ({
