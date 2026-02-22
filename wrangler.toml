@@ -1,5 +1,8 @@
 name = "weft"
 main = ".open-next/worker.js"
+
+[build]
+command = "pnpm build && npx @opennextjs/cloudflare build"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
 
