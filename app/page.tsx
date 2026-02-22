@@ -10,6 +10,7 @@ import { useWeftEditor } from '@/ui/useWeftEditor'
 export default function Home() {
   const { editorRef, parsed, toggleTask, getDocText } = useWeftEditor()
   const [helpOpen, setHelpOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handleExport = () => {
     const text = getDocText()
@@ -17,12 +18,22 @@ export default function Home() {
   }
 
   const handleCloseHelp = useCallback(() => setHelpOpen(false), [])
+  const handleToggleSidebar = useCallback(() => setSidebarOpen((prev) => !prev), [])
+  const handleCloseSidebar = useCallback(() => setSidebarOpen(false), [])
 
   return (
     <div className="flex h-screen flex-col">
       <header className="flex items-center justify-between border-b border-zinc-200 px-4 py-2">
         <h1 className="text-lg font-bold">Weft</h1>
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleToggleSidebar}
+            className="rounded border border-zinc-300 px-2.5 py-1 text-sm text-zinc-700 transition-colors hover:bg-zinc-100 md:hidden"
+            data-testid="sidebar-toggle"
+          >
+            {sidebarOpen ? '\u2715' : '\u2630'}
+          </button>
           <button
             type="button"
             onClick={() => setHelpOpen(true)}
@@ -41,11 +52,16 @@ export default function Home() {
           </button>
         </div>
       </header>
-      <main className="flex flex-1 overflow-hidden">
+      <main className="relative flex flex-1 overflow-hidden">
         <div className="flex-1 overflow-hidden">
           <Editor editorRef={editorRef} />
         </div>
-        <Sidebar parsed={parsed} onToggle={toggleTask} />
+        <Sidebar
+          parsed={parsed}
+          onToggle={toggleTask}
+          open={sidebarOpen}
+          onClose={handleCloseSidebar}
+        />
       </main>
       <HelpDialog open={helpOpen} onClose={handleCloseHelp} />
     </div>
