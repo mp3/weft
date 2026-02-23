@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { loadDocument, saveDocument } from './localStorage'
 
 describe('localStorage', () => {
@@ -24,5 +24,23 @@ describe('localStorage', () => {
     saveDocument('first')
     saveDocument('second')
     expect(loadDocument()).toBe('second')
+  })
+
+  it('returns null when localStorage.getItem throws', () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('quota exceeded')
+    })
+    expect(loadDocument()).toBeNull()
+  })
+
+  it('returns false when localStorage.setItem throws', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('quota exceeded')
+    })
+    expect(saveDocument('content')).toBe(false)
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 })

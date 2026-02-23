@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { loadThemePreference, saveThemePreference } from './themeStorage'
 
 describe('themeStorage', () => {
@@ -38,5 +38,23 @@ describe('themeStorage', () => {
     saveThemePreference('light')
     saveThemePreference('dark')
     expect(loadThemePreference()).toBe('dark')
+  })
+
+  it('returns system when localStorage.getItem throws', () => {
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('quota exceeded')
+    })
+    expect(loadThemePreference()).toBe('system')
+  })
+
+  it('returns false when localStorage.setItem throws', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('quota exceeded')
+    })
+    expect(saveThemePreference('dark')).toBe(false)
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 })
