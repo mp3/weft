@@ -16,6 +16,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Weft',
   description: 'Dynamic plaintext editor with structured sidebar views',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Weft',
+  },
+  icons: {
+    apple: '/apple-touch-icon.png',
+  },
 }
 
 export const viewport: Viewport = {

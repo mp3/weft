@@ -44,6 +44,10 @@ yarn-error.log*
 test-results/
 playwright-report/
 
+# serwist
+public/sw.js
+public/sw.js.map
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

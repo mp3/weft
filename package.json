@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.30.1",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
@@ -14,6 +14,7 @@
     "e2e": "playwright test",
     "format": "biome format --write .",
     "format:check": "biome check .",
+    "build:preview": "next build --webpack && next start",
     "build:worker": "npx @opennextjs/cloudflare build",
     "deploy": "pnpm build:worker && wrangler deploy",
     "preview": "pnpm build:worker && wrangler dev"
@@ -23,6 +24,7 @@
     "@codemirror/state": "6.5.4",
     "@codemirror/view": "6.39.15",
     "@replit/codemirror-vim": "6.3.0",
+    "@serwist/next": "9.5.6",
     "codemirror": "6.0.2",
     "next": "16.1.6",
     "react": "19.2.3",
@@ -50,6 +52,8 @@
     "eslint": "9.39.3",
     "eslint-config-next": "16.1.6",
     "jsdom": "25.0.1",
+    "serwist": "9.5.6",
+    "sharp": "0.34.5",
     "tailwindcss": "4.2.0",
     "typescript": "5.9.3",
     "vite-tsconfig-paths": "6.1.1",
