@@ -15,7 +15,7 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      testMatch: /(?:app|darkmode|pwa)\.spec\.ts/,
+      testMatch: /(?:app|darkmode|pwa|shortcuts)\.spec\.ts/,
     },
     {
       name: 'mobile-chrome',

@@ -45,4 +45,13 @@ export const helpSections: readonly HelpSection[] = [
       { syntax: 'plain text', description: 'Plain text (ignored by parser)' },
     ],
   },
+  {
+    title: 'Keyboard Shortcuts',
+    items: [
+      { syntax: '\u2318E / Ctrl+E', description: 'Export as .txt' },
+      { syntax: '\u2318S / Ctrl+S', description: 'Save now' },
+      { syntax: '\u2318/ / Ctrl+/', description: 'Toggle help' },
+      { syntax: '\u2318B / Ctrl+B', description: 'Toggle sidebar' },
+    ],
+  },
 ] as const
