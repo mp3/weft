@@ -8,7 +8,12 @@ describe('exportAsTextFile', () => {
   beforeEach(() => {
     createdElements = []
     vi.spyOn(document, 'createElement').mockImplementation((tag: string) => {
-      const el = { tagName: tag, href: '', download: '', click: mockClick } as unknown as HTMLAnchorElement
+      const el = {
+        tagName: tag,
+        href: '',
+        download: '',
+        click: mockClick,
+      } as unknown as HTMLAnchorElement
       createdElements.push(el)
       return el
     })
