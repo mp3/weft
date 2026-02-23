@@ -2,7 +2,16 @@ import { describe, expect, it, vi } from 'vitest'
 import type { ShortcutActions } from './useKeyboardShortcuts'
 import { createShortcutHandler, shortcutDefs } from './useKeyboardShortcuts'
 
-function makeEvent(key: string, modifiers: { metaKey?: boolean; ctrlKey?: boolean } = {}) {
+function makeEvent(
+  key: string,
+  modifiers: {
+    metaKey?: boolean
+    ctrlKey?: boolean
+    altKey?: boolean
+    shiftKey?: boolean
+    code?: string
+  } = {},
+) {
   const event = new KeyboardEvent('keydown', {
     key,
     bubbles: true,
@@ -19,6 +28,7 @@ function createActions(): ShortcutActions {
     onSave: vi.fn(),
     onToggleHelp: vi.fn(),
     onToggleSidebar: vi.fn(),
+    onToggleVim: vi.fn(),
   }
 }
 
@@ -122,11 +132,52 @@ describe('createShortcutHandler', () => {
 
     expect(event.preventDefault).not.toHaveBeenCalled()
   })
+
+  it('calls onToggleVim on Alt+Shift+V (via e.code)', () => {
+    const actions = createActions()
+    const handler = createShortcutHandler(actions, false)
+    const event = makeEvent('\u25CA', { altKey: true, shiftKey: true, code: 'KeyV' })
+
+    handler(event)
+
+    expect(actions.onToggleVim).toHaveBeenCalledOnce()
+    expect(event.preventDefault).toHaveBeenCalledOnce()
+  })
+
+  it('does not call onToggleVim on Mod+V', () => {
+    const actions = createActions()
+    const handler = createShortcutHandler(actions, false)
+    const event = makeEvent('v', { metaKey: true, code: 'KeyV' })
+
+    handler(event)
+
+    expect(actions.onToggleVim).not.toHaveBeenCalled()
+  })
+
+  it('does not call onToggleVim on Alt+V without Shift', () => {
+    const actions = createActions()
+    const handler = createShortcutHandler(actions, false)
+    const event = makeEvent('v', { altKey: true, code: 'KeyV' })
+
+    handler(event)
+
+    expect(actions.onToggleVim).not.toHaveBeenCalled()
+  })
+
+  it('ignores onToggleVim when helpOpen is true', () => {
+    const actions = createActions()
+    const handler = createShortcutHandler(actions, true)
+    const event = makeEvent('\u25CA', { altKey: true, shiftKey: true, code: 'KeyV' })
+
+    handler(event)
+
+    expect(actions.onToggleVim).not.toHaveBeenCalled()
+  })
 })
 
 describe('shortcutDefs', () => {
-  it('has definitions for all four shortcuts', () => {
-    expect(shortcutDefs).toHaveLength(4)
+  it('has definitions for all five shortcuts', () => {
+    expect(shortcutDefs).toHaveLength(5)
   })
 
   it('every definition has required fields', () => {

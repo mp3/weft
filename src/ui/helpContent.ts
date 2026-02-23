@@ -52,6 +52,7 @@ export const helpSections: readonly HelpSection[] = [
       { syntax: '\u2318S / Ctrl+S', description: 'Save now' },
       { syntax: '\u2318/ / Ctrl+/', description: 'Toggle help' },
       { syntax: '\u2318B / Ctrl+B', description: 'Toggle sidebar' },
+      { syntax: '\u2325\u21e7V / Alt+Shift+V', description: 'Toggle vim mode' },
     ],
   },
 ] as const

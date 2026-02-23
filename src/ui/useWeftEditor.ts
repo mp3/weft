@@ -11,6 +11,7 @@ import { toggleTaskLine } from '@/parser/toggleTask'
 import type { ParsedDocument } from '@/parser/types'
 import { SAMPLE_TEXT } from '@/sampleText'
 import { loadDocument, saveDocument } from '@/storage/localStorage'
+import { loadVimEnabled, saveVimEnabled } from '@/storage/vimStorage'
 import type { ResolvedTheme } from './useTheme'
 import { useTheme } from './useTheme'
 
@@ -32,8 +33,10 @@ export function useWeftEditor() {
   const editorRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<EditorView | null>(null)
   const themeCompartment = useRef(new Compartment())
+  const vimCompartment = useRef(new Compartment())
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [parsed, setParsed] = useState<ParsedDocument>(getInitialParsed)
+  const [vimEnabled, setVimEnabled] = useState(loadVimEnabled)
   const { resolved } = useTheme()
 
   const getDocText = useCallback((): string => {
@@ -63,7 +66,7 @@ export function useWeftEditor() {
     const state = EditorState.create({
       doc: initialDoc,
       extensions: [
-        vim(),
+        vimCompartment.current.of(vimEnabled ? vim() : []),
         basicSetup,
         themeCompartment.current.of(getThemeExtension(resolved)),
         EditorView.updateListener.of((update) => {
@@ -101,6 +104,23 @@ export function useWeftEditor() {
     })
   }, [resolved])
 
+  useEffect(() => {
+    const view = viewRef.current
+    if (!view) return
+
+    view.dispatch({
+      effects: vimCompartment.current.reconfigure(vimEnabled ? vim() : []),
+    })
+  }, [vimEnabled])
+
+  const toggleVim = useCallback(() => {
+    setVimEnabled((prev) => {
+      const next = !prev
+      saveVimEnabled(next)
+      return next
+    })
+  }, [])
+
   const moveTask = useCallback((fromLineIndex: number, toLineIndex: number) => {
     const view = viewRef.current
     if (!view) return
@@ -115,5 +135,5 @@ export function useWeftEditor() {
     })
   }, [])
 
-  return { editorRef, parsed, toggleTask, moveTask, getDocText }
+  return { editorRef, parsed, toggleTask, moveTask, getDocText, vimEnabled, toggleVim }
 }
