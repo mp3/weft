@@ -3,9 +3,12 @@
 import { useState } from 'react'
 import type { ParsedDocument } from '@/parser/types'
 import { dueSoon } from '@/query/dueSoon'
+import type { TaskFilter } from '@/query/filterTasks'
+import { EMPTY_FILTER, filterTasks } from '@/query/filterTasks'
 import { openTasks } from '@/query/openTasks'
 import { tagCounts } from '@/query/tagCounts'
 import { DueSoonPanel } from './DueSoonPanel'
+import { SearchBar } from './SearchBar'
 import { TagCloud } from './TagCloud'
 import { TaskList } from './TaskList'
 
@@ -26,9 +29,11 @@ interface SidebarProps {
 
 export function Sidebar({ parsed, onToggle, open, onClose }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<Tab>('tasks')
+  const [filter, setFilter] = useState<TaskFilter>(EMPTY_FILTER)
 
-  const openTaskList = openTasks(parsed.tasks)
-  const due = dueSoon(parsed.tasks)
+  const filtered = filterTasks(parsed.tasks, filter)
+  const openTaskList = filter.showCompleted ? filtered : openTasks(filtered)
+  const due = dueSoon(filtered)
   const tags = tagCounts(parsed.tasks)
 
   return (
@@ -48,6 +53,7 @@ export function Sidebar({ parsed, onToggle, open, onClose }: SidebarProps) {
         }`}
         data-testid="sidebar"
       >
+        <SearchBar filter={filter} onFilterChange={setFilter} />
         <nav className="flex border-b border-zinc-200 dark:border-zinc-700">
           {TABS.map((tab) => (
             <button
@@ -73,7 +79,13 @@ export function Sidebar({ parsed, onToggle, open, onClose }: SidebarProps) {
         <div className="flex-1 overflow-auto p-4" data-testid="sidebar-content">
           {activeTab === 'tasks' && <TaskList tasks={openTaskList} onToggle={onToggle} />}
           {activeTab === 'due' && <DueSoonPanel tasks={due} onToggle={onToggle} />}
-          {activeTab === 'tags' && <TagCloud tags={tags} />}
+          {activeTab === 'tags' && (
+            <TagCloud
+              tags={tags}
+              selectedTag={filter.tag}
+              onTagSelect={(tag) => setFilter({ ...filter, tag })}
+            />
+          )}
         </div>
       </aside>
     </>

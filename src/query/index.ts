@@ -1,3 +1,5 @@
 export { dueSoon } from './dueSoon'
+export type { TaskFilter } from './filterTasks'
+export { EMPTY_FILTER, filterTasks } from './filterTasks'
 export { openTasks } from './openTasks'
 export { tagCounts } from './tagCounts'
