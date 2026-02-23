@@ -5,6 +5,7 @@ import { EditorView } from '@codemirror/view'
 import { vim } from '@replit/codemirror-vim'
 import { basicSetup } from 'codemirror'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { moveLineInDocument } from '@/parser/moveLine'
 import { parseDocument } from '@/parser/parseDocument'
 import { toggleTaskLine } from '@/parser/toggleTask'
 import type { ParsedDocument } from '@/parser/types'
@@ -100,5 +101,19 @@ export function useWeftEditor() {
     })
   }, [resolved])
 
-  return { editorRef, parsed, toggleTask, getDocText }
+  const moveTask = useCallback((fromLineIndex: number, toLineIndex: number) => {
+    const view = viewRef.current
+    if (!view) return
+    if (fromLineIndex === toLineIndex) return
+
+    const currentText = view.state.doc.toString()
+    const newText = moveLineInDocument(currentText, fromLineIndex, toLineIndex)
+    if (newText === currentText) return
+
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: newText },
+    })
+  }, [])
+
+  return { editorRef, parsed, toggleTask, moveTask, getDocText }
 }

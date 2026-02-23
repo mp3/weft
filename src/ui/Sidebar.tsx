@@ -23,11 +23,12 @@ const TABS: readonly { readonly id: Tab; readonly label: string }[] = [
 interface SidebarProps {
   readonly parsed: ParsedDocument
   readonly onToggle: (lineIndex: number) => void
+  readonly onMoveTask: (fromLineIndex: number, toLineIndex: number) => void
   readonly open: boolean
   readonly onClose: () => void
 }
 
-export function Sidebar({ parsed, onToggle, open, onClose }: SidebarProps) {
+export function Sidebar({ parsed, onToggle, onMoveTask, open, onClose }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<Tab>('tasks')
   const [filter, setFilter] = useState<TaskFilter>(EMPTY_FILTER)
 
@@ -77,7 +78,9 @@ export function Sidebar({ parsed, onToggle, open, onClose }: SidebarProps) {
           ))}
         </nav>
         <div className="flex-1 overflow-auto p-4" data-testid="sidebar-content">
-          {activeTab === 'tasks' && <TaskList tasks={openTaskList} onToggle={onToggle} />}
+          {activeTab === 'tasks' && (
+            <TaskList tasks={openTaskList} onToggle={onToggle} onMoveTask={onMoveTask} />
+          )}
           {activeTab === 'due' && <DueSoonPanel tasks={due} onToggle={onToggle} />}
           {activeTab === 'tags' && (
             <TagCloud

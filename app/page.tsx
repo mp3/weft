@@ -12,7 +12,7 @@ import { useKeyboardShortcuts } from '@/ui/useKeyboardShortcuts'
 import { useWeftEditor } from '@/ui/useWeftEditor'
 
 export default function Home() {
-  const { editorRef, parsed, toggleTask, getDocText } = useWeftEditor()
+  const { editorRef, parsed, toggleTask, moveTask, getDocText } = useWeftEditor()
   const [helpOpen, setHelpOpen] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [toastVisible, setToastVisible] = useState(false)
@@ -86,6 +86,7 @@ export default function Home() {
         <Sidebar
           parsed={parsed}
           onToggle={toggleTask}
+          onMoveTask={moveTask}
           open={sidebarOpen}
           onClose={handleCloseSidebar}
         />
