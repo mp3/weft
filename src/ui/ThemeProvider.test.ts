@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { ThemeProvider } from './ThemeProvider'
 import { resolveTheme, useTheme } from './useTheme'
 
@@ -41,18 +41,17 @@ describe('resolveTheme', () => {
     })
     vi.stubGlobal('matchMedia', matchMediaMock)
 
-    let captured: ReturnType<typeof useTheme> | null = null
+    const capturedRef: { current: ReturnType<typeof useTheme> | null } = { current: null }
     function GoodComponent() {
-      captured = useTheme()
+      // eslint-disable-next-line react-hooks/immutability -- intentional capture pattern for SSR hook testing
+      capturedRef.current = useTheme()
       return null
     }
-    renderToString(
-      createElement(ThemeProvider, null, createElement(GoodComponent)),
-    )
-    expect(captured).not.toBeNull()
-    expect(captured!.preference).toBe('system')
-    expect(captured!.resolved).toBe('light')
-    expect(typeof captured!.setPreference).toBe('function')
+    renderToString(createElement(ThemeProvider, null, createElement(GoodComponent)))
+    expect(capturedRef.current).not.toBeNull()
+    expect(capturedRef.current!.preference).toBe('system')
+    expect(capturedRef.current!.resolved).toBe('light')
+    expect(typeof capturedRef.current!.setPreference).toBe('function')
 
     vi.unstubAllGlobals()
   })
