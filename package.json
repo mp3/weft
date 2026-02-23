@@ -17,7 +17,8 @@
     "build:preview": "next build --webpack && next start",
     "build:worker": "npx @opennextjs/cloudflare build",
     "deploy": "pnpm build:worker && wrangler deploy",
-    "preview": "pnpm build:worker && wrangler dev"
+    "preview": "pnpm build:worker && wrangler dev",
+    "verify": "pnpm lint && pnpm typecheck && pnpm format:check && pnpm test"
   },
   "dependencies": {
     "@codemirror/commands": "6.10.2",
@@ -37,6 +38,7 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
+      "lefthook",
       "sharp",
       "unrs-resolver",
       "workerd"
@@ -55,6 +57,7 @@
     "eslint": "9.39.3",
     "eslint-config-next": "16.1.6",
     "jsdom": "25.0.1",
+    "lefthook": "2.1.1",
     "serwist": "9.5.6",
     "sharp": "0.34.5",
     "tailwindcss": "4.2.0",

@@ -31,5 +31,22 @@
   },
   "files": {
     "includes": ["app/**", "src/**", "e2e/**", "*.ts", "*.mts", "*.mjs"]
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["next-env.d.ts"],
+      "formatter": { "enabled": false },
+      "linter": { "enabled": false }
+    },
+    {
+      "includes": ["app/globals.css"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noImportantStyles": "off"
+          }
+        }
+      }
+    }
+  ]
 }
