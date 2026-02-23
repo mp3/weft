@@ -9,7 +9,7 @@ interface TaskListProps {
 
 export function TaskList({ tasks, onToggle }: TaskListProps) {
   if (tasks.length === 0) {
-    return <p className="text-sm text-zinc-500">No open tasks</p>
+    return <p className="text-sm text-zinc-500 dark:text-zinc-400">No open tasks</p>
   }
 
   return (
@@ -23,7 +23,7 @@ export function TaskList({ tasks, onToggle }: TaskListProps) {
             className="mt-0.5 shrink-0"
             data-testid={`task-checkbox-${task.line}`}
           />
-          <span className={task.completed ? 'line-through text-zinc-400' : ''}>
+          <span className={task.completed ? 'line-through text-zinc-400 dark:text-zinc-500' : ''}>
             {task.description}
           </span>
         </li>

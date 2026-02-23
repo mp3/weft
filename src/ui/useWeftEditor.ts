@@ -1,14 +1,17 @@
 'use client'
 
-import { EditorState } from '@codemirror/state'
+import { Compartment, EditorState } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
 import { vim } from '@replit/codemirror-vim'
-import { basicSetup, EditorView } from 'codemirror'
+import { basicSetup } from 'codemirror'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { parseDocument } from '@/parser/parseDocument'
 import { toggleTaskLine } from '@/parser/toggleTask'
 import type { ParsedDocument } from '@/parser/types'
 import { SAMPLE_TEXT } from '@/sampleText'
 import { loadDocument, saveDocument } from '@/storage/localStorage'
+import type { ResolvedTheme } from './useTheme'
+import { useTheme } from './useTheme'
 
 const SAVE_DEBOUNCE_MS = 500
 
@@ -20,11 +23,17 @@ function getInitialParsed(): ParsedDocument {
   return parseDocument(getInitialDocument())
 }
 
+function getThemeExtension(resolved: ResolvedTheme) {
+  return resolved === 'dark' ? EditorView.theme({}, { dark: true }) : []
+}
+
 export function useWeftEditor() {
   const editorRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<EditorView | null>(null)
+  const themeCompartment = useRef(new Compartment())
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [parsed, setParsed] = useState<ParsedDocument>(getInitialParsed)
+  const { resolved } = useTheme()
 
   const getDocText = useCallback((): string => {
     return viewRef.current?.state.doc.toString() ?? ''
@@ -44,6 +53,7 @@ export function useWeftEditor() {
     })
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: editor must only be created once on mount; theme updates are handled by the separate reconfigure effect below
   useEffect(() => {
     if (!editorRef.current) return
 
@@ -54,6 +64,7 @@ export function useWeftEditor() {
       extensions: [
         vim(),
         basicSetup,
+        themeCompartment.current.of(getThemeExtension(resolved)),
         EditorView.updateListener.of((update) => {
           if (!update.docChanged) return
           const text = update.state.doc.toString()
@@ -78,7 +89,16 @@ export function useWeftEditor() {
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current)
       view.destroy()
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const view = viewRef.current
+    if (!view) return
+
+    view.dispatch({
+      effects: themeCompartment.current.reconfigure(getThemeExtension(resolved)),
+    })
+  }, [resolved])
 
   return { editorRef, parsed, toggleTask, getDocText }
 }

@@ -9,7 +9,7 @@ interface DueSoonPanelProps {
 
 export function DueSoonPanel({ tasks, onToggle }: DueSoonPanelProps) {
   if (tasks.length === 0) {
-    return <p className="text-sm text-zinc-500">No upcoming due items</p>
+    return <p className="text-sm text-zinc-500 dark:text-zinc-400">No upcoming due items</p>
   }
 
   return (
@@ -24,7 +24,7 @@ export function DueSoonPanel({ tasks, onToggle }: DueSoonPanelProps) {
             data-testid={`due-checkbox-${task.line}`}
           />
           <span className="flex-1">{task.description}</span>
-          <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-800">
+          <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
             {task.due}
           </span>
         </li>

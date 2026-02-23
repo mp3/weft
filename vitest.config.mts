@@ -9,7 +9,7 @@ export default defineConfig({
     include: ['src/**/*.test.ts'],
     coverage: {
       provider: 'v8',
-      include: ['src/parser/**', 'src/query/**', 'src/storage/**'],
+      include: ['src/parser/**', 'src/query/**', 'src/storage/**', 'src/ui/useTheme.ts'],
       exclude: ['**/*.test.ts'],
       thresholds: {
         statements: 80,

@@ -45,16 +45,16 @@ export function HelpDialog({ open, onClose }: HelpDialogProps) {
       onKeyDown={(e) => {
         if (e.key === 'Escape') onClose()
       }}
-      className="w-full max-w-lg rounded-lg border border-zinc-200 bg-white p-0 shadow-lg backdrop:bg-black/40"
+      className="w-full max-w-lg rounded-lg border border-zinc-200 bg-white p-0 shadow-lg backdrop:bg-black/40 dark:border-zinc-700 dark:bg-zinc-900"
     >
       <div className="p-6">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-zinc-900">Syntax Reference</h2>
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Syntax Reference</h2>
           <button
             type="button"
             data-testid="help-close"
             onClick={onClose}
-            className="rounded p-1 text-zinc-500 transition-colors hover:text-zinc-900"
+            className="rounded p-1 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
           >
             ✕
           </button>
@@ -62,14 +62,16 @@ export function HelpDialog({ open, onClose }: HelpDialogProps) {
         <div className="space-y-4">
           {helpSections.map((section) => (
             <section key={section.title}>
-              <h3 className="mb-2 text-sm font-semibold text-zinc-700">{section.title}</h3>
+              <h3 className="mb-2 text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                {section.title}
+              </h3>
               <ul className="space-y-1">
                 {section.items.map((item) => (
                   <li key={item.syntax} className="flex items-baseline gap-3 text-sm">
-                    <code className="shrink-0 rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs text-zinc-800">
+                    <code className="shrink-0 rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200">
                       {item.syntax}
                     </code>
-                    <span className="text-zinc-600">{item.description}</span>
+                    <span className="text-zinc-600 dark:text-zinc-400">{item.description}</span>
                   </li>
                 ))}
               </ul>
