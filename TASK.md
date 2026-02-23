@@ -2,7 +2,7 @@
 
 ## Backlog
 
-- [ ] **PWA 対応** — Service Worker + manifest.json でオフライン利用・ホーム画面追加を可能に
+- [x] **PWA 対応** — Service Worker + manifest.json でオフライン利用・ホーム画面追加を可能に
 - [ ] **キーボードショートカット** — Ctrl+S で保存確認、Ctrl+E でエクスポートなど
 - [ ] **検索・フィルタ機能** — タスクをタグや期限でフィルタリング
 - [x] **ダークモード** — Tailwind の `dark:` で切り替え対応
