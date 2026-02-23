@@ -12,6 +12,11 @@ A dynamic plaintext editor with structured sidebar views. Write tasks in plain t
 - **Auto-save** — persisted to localStorage on every change
 - **Export** — download as `.txt`
 - **Syntax reference** — built-in help dialog
+- **Dark mode** — system-aware with manual toggle (light / dark / system)
+- **Keyboard shortcuts** — Mod+E export, Mod+S save, Mod+B sidebar, Mod+/ help
+- **Search & filter** — text search, tag filter, show-completed toggle
+- **Drag & drop** — reorder tasks in the sidebar via @dnd-kit
+- **PWA** — offline-capable via Service Worker
 - **Cloudflare Workers** — deploy to the edge
 
 ## Syntax
@@ -84,25 +89,38 @@ src/
     parseLine.ts        Parse a single task line
     parseDocument.ts    Parse full document
     toggleTask.ts       Toggle [ ] ↔ [x]
+    moveLine.ts         Move a line within the document
     types.ts            ParsedTask, ParsedDocument
   query/                Filtering & aggregation
     openTasks.ts        Filter incomplete tasks
     dueSoon.ts          Tasks due within N days
     tagCounts.ts        Tag frequency counts
+    filterTasks.ts      Text search, tag filter, show-completed
   storage/              Persistence
     localStorage.ts     Auto-save / load
     exportFile.ts       Download as .txt
+    themeStorage.ts     Theme preference persistence
   ui/                   React components
     Editor.tsx          CodeMirror wrapper
     useWeftEditor.ts    Editor state hook
     Sidebar.tsx         Tabbed sidebar (responsive)
-    TaskList.tsx        Open tasks list
+    TaskList.tsx        Open tasks list (drag & drop)
+    SortableTaskItem.tsx  Draggable task item
     DueSoonPanel.tsx    Due soon panel
     TagCloud.tsx        Tag cloud
+    SearchBar.tsx       Search and filter controls
     HelpDialog.tsx      Syntax reference modal
+    ThemeToggle.tsx     Dark mode toggle
+    ThemeProvider.tsx    Theme context provider
+    useTheme.ts         Theme state hook
+    useKeyboardShortcuts.ts  Global keyboard shortcuts
 e2e/
   app.spec.ts           Desktop E2E tests
   mobile.spec.ts        Mobile E2E tests
+  darkmode.spec.ts      Dark mode E2E tests
+  pwa.spec.ts           PWA manifest tests
+  shortcuts.spec.ts     Keyboard shortcut tests
+  search-filter.spec.ts Search & filter tests
 ```
 
 ## License
