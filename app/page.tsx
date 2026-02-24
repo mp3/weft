@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, useSyncExternalStore } from 'react'
 import { exportAsTextFile } from '@/storage/exportFile'
 import { saveDocument } from '@/storage/localStorage'
 import { Editor } from '@/ui/Editor'
@@ -8,14 +8,21 @@ import { HelpDialog } from '@/ui/HelpDialog'
 import { Sidebar } from '@/ui/Sidebar'
 import { ThemeToggle } from '@/ui/ThemeToggle'
 import type { ShortcutActions } from '@/ui/useKeyboardShortcuts'
-import { useKeyboardShortcuts } from '@/ui/useKeyboardShortcuts'
+import { getShortcutHint, useKeyboardShortcuts } from '@/ui/useKeyboardShortcuts'
 import { useWeftEditor } from '@/ui/useWeftEditor'
+
+const subscribeNoop = () => () => {}
 
 export default function Home() {
   const { editorRef, parsed, toggleTask, moveTask, getDocText, toggleVim } = useWeftEditor()
   const [helpOpen, setHelpOpen] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [toastVisible, setToastVisible] = useState(false)
+  const isMac = useSyncExternalStore(
+    subscribeNoop,
+    () => /Mac|iPhone|iPad|iPod/.test(navigator.userAgent),
+    () => false,
+  )
 
   const handleExport = useCallback(() => {
     const text = getDocText()
@@ -57,6 +64,7 @@ export default function Home() {
             onClick={handleToggleSidebar}
             className="rounded border border-zinc-300 px-2.5 py-1 text-sm text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800 md:hidden"
             aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+            title={getShortcutHint('onToggleSidebar', isMac)}
             data-testid="sidebar-toggle"
           >
             {sidebarOpen ? '\u2715' : '\u2630'}
@@ -66,6 +74,8 @@ export default function Home() {
             type="button"
             onClick={handleToggleHelp}
             className="rounded border border-zinc-300 px-2.5 py-1 text-sm text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            aria-label="Toggle help"
+            title={getShortcutHint('onToggleHelp', isMac)}
             data-testid="help-button"
           >
             ?
@@ -74,6 +84,7 @@ export default function Home() {
             type="button"
             onClick={handleExport}
             className="rounded bg-zinc-900 px-3 py-1 text-sm text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            title={getShortcutHint('onExport', isMac)}
             data-testid="export-button"
           >
             Export .txt

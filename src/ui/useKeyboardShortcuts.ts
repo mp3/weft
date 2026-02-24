@@ -14,6 +14,7 @@ export interface ShortcutDef {
   readonly key: string
   readonly code?: string
   readonly mac: string
+  readonly win: string
   readonly label: string
   readonly action: keyof ShortcutActions
   readonly mod?: boolean
@@ -22,14 +23,15 @@ export interface ShortcutDef {
 }
 
 export const shortcutDefs: readonly ShortcutDef[] = [
-  { key: 'e', mac: '\u2318E', label: 'Export as .txt', action: 'onExport' },
-  { key: 's', mac: '\u2318S', label: 'Save now', action: 'onSave' },
-  { key: '/', mac: '\u2318/', label: 'Toggle help', action: 'onToggleHelp' },
-  { key: 'b', mac: '\u2318B', label: 'Toggle sidebar', action: 'onToggleSidebar' },
+  { key: 'e', mac: '\u2318E', win: 'Ctrl+E', label: 'Export as .txt', action: 'onExport' },
+  { key: 's', mac: '\u2318S', win: 'Ctrl+S', label: 'Save now', action: 'onSave' },
+  { key: '/', mac: '\u2318/', win: 'Ctrl+/', label: 'Toggle help', action: 'onToggleHelp' },
+  { key: 'b', mac: '\u2318B', win: 'Ctrl+B', label: 'Toggle sidebar', action: 'onToggleSidebar' },
   {
     code: 'KeyV',
     key: 'v',
     mac: '\u2325\u21e7V',
+    win: 'Alt+Shift+V',
     label: 'Toggle vim mode',
     action: 'onToggleVim',
     mod: false,
@@ -37,6 +39,13 @@ export const shortcutDefs: readonly ShortcutDef[] = [
     shift: true,
   },
 ]
+
+export function getShortcutHint(action: keyof ShortcutActions, isMac: boolean): string | undefined {
+  const def = shortcutDefs.find((d) => d.action === action)
+  if (!def) return undefined
+  const shortcut = isMac ? def.mac : def.win
+  return `${def.label} (${shortcut})`
+}
 
 function matchesKey(e: KeyboardEvent, def: ShortcutDef): boolean {
   if (def.code) return e.code === def.code

@@ -59,6 +59,14 @@ test.describe('Keyboard Shortcuts', () => {
     await expect(toast).not.toBeVisible({ timeout: 3000 })
   })
 
+  test('header buttons have shortcut hints in title', async ({ page }) => {
+    const exportBtn = page.locator('[data-testid="export-button"]')
+    await expect(exportBtn).toHaveAttribute('title', /Export as \.txt \(.+\)/)
+
+    const helpBtn = page.locator('[data-testid="help-button"]')
+    await expect(helpBtn).toHaveAttribute('title', /Toggle help \(.+\)/)
+  })
+
   test('help dialog shows keyboard shortcuts section', async ({ page }) => {
     await page.keyboard.press(`${mod}+/`)
 

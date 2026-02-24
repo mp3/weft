@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { ShortcutActions } from './useKeyboardShortcuts'
-import { createShortcutHandler, shortcutDefs } from './useKeyboardShortcuts'
+import { createShortcutHandler, getShortcutHint, shortcutDefs } from './useKeyboardShortcuts'
 
 function makeEvent(
   key: string,
@@ -184,8 +184,30 @@ describe('shortcutDefs', () => {
     for (const def of shortcutDefs) {
       expect(def.key).toBeTruthy()
       expect(def.mac).toBeTruthy()
+      expect(def.win).toBeTruthy()
       expect(def.label).toBeTruthy()
       expect(def.action).toBeTruthy()
     }
+  })
+})
+
+describe('getShortcutHint', () => {
+  it('returns Mac format when isMac is true', () => {
+    expect(getShortcutHint('onExport', true)).toBe('Export as .txt (⌘E)')
+  })
+
+  it('returns Win format when isMac is false', () => {
+    expect(getShortcutHint('onExport', false)).toBe('Export as .txt (Ctrl+E)')
+  })
+
+  it('returns correct hint for all button actions', () => {
+    expect(getShortcutHint('onToggleHelp', true)).toBe('Toggle help (⌘/)')
+    expect(getShortcutHint('onToggleHelp', false)).toBe('Toggle help (Ctrl+/)')
+    expect(getShortcutHint('onToggleSidebar', true)).toBe('Toggle sidebar (⌘B)')
+    expect(getShortcutHint('onToggleSidebar', false)).toBe('Toggle sidebar (Ctrl+B)')
+  })
+
+  it('returns undefined for unknown action', () => {
+    expect(getShortcutHint('nonExistent' as keyof ShortcutActions, true)).toBeUndefined()
   })
 })
