@@ -3,7 +3,7 @@
 ## Short-term (v0.2)
 
 - [ ] **エディタのシンタックスハイライト** — CodeMirror 6 のカスタム Language Support を作成し、タスクチェックボックス (`- [ ]` / `- [x]`)、タグ (`#tagname`)、期限 (`due:YYYY-MM-DD`) をそれぞれ異なる色でハイライト表示する。`@lezer/lr` でパーサーを定義するか、`StreamLanguage` で軽量に実装する。ダークモード時の配色も定義すること。エディタがプレーンテキストではなく「構造化されたフォーマット」であることを視覚的に伝え、編集体験を劇的に向上させる
-- [ ] **ボタンにキーボードショートカットヒント追加** — ヘッダーの各ボタン (Export, Help, Sidebar Toggle, Theme Toggle) にツールチップを追加し、対応するショートカットキーを表示する (例: `Export (⌘E)`)。`title` 属性または CSS ベースのカスタムツールチップで実装。ホバー時に表示、モバイルでは非表示。機能の発見可能性を最大限に改善する最もコスパの高い施策
+- [x] **ボタンにキーボードショートカットヒント追加** — ヘッダーの各ボタン (Export, Help, Sidebar Toggle, Theme Toggle) にツールチップを追加し、対応するショートカットキーを表示する (例: `Export (⌘E)`)。`title` 属性または CSS ベースのカスタムツールチップで実装。ホバー時に表示、モバイルでは非表示。機能の発見可能性を最大限に改善する最もコスパの高い施策
 - [ ] **サイドバーからエディタへのクリックスクロール** — サイドバーのタスク説明文をクリックしたとき、エディタ内の該当行にスクロールし一時的にハイライト (1-2 秒のフラッシュ) する。`EditorView.dispatch({ effects: EditorView.scrollIntoView(pos) })` と `Decoration.line` で実装。`parseDocument` の結果にある `lineIndex` を使ってエディタの行位置を特定する。サイドバーとエディタの双方向接続感を生む重要な UX 改善
 - [ ] **.txt インポート機能** — エクスポート (`exportFile.ts`) と対になるインポート機能。`<input type="file" accept=".txt">` で .txt ファイルを読み込み、エディタのドキュメントを置き換える。既存テキストがある場合は確認ダイアログを表示。`src/storage/importFile.ts` に `importTextFile(): Promise<string | null>` を実装し、`page.tsx` のヘッダーに Import ボタンまたは Export ボタンのドロップダウンメニューとして配置。データの持ち込みを可能にし、エクスポートとの対称性を確保する
 - [ ] **Vim モード状態インジケーター** — Vim モードが ON のとき、ヘッダーまたはエディタ下部のステータスバーに `VIM` バッジを表示する。`useWeftEditor` が返す `vimEnabled` を使い、条件付きレンダリングで表示。CodeMirror の Vim ステータスバー (Normal/Insert/Visual モード表示) も Compartment 経由で表示/非表示を切り替える。`Alt+Shift+V` でトグルした結果が視覚的にフィードバックされるようにする
